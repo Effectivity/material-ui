@@ -396,10 +396,14 @@ const Tooltip = React.forwardRef(function Tooltip(props, ref) {
 
     clearTimeout(enterTimer.current);
     clearTimeout(leaveTimer.current);
-    event.persist();
-    leaveTimer.current = setTimeout(() => {
+    if(leaveDelay) {
+      event.persist();
+      leaveTimer.current = setTimeout(() => {
+        handleClose(event);
+      }, leaveDelay);
+    } else {
       handleClose(event);
-    }, leaveDelay);
+    }
   };
 
   const handleTouchStart = event => {
